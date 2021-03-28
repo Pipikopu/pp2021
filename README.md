@@ -10,5 +10,5 @@ Student Info
 =========================
 
 * Student Name: NGUYEN QUANG ANH
-* Student ID: BI10012
+* Student ID: BI10-012
 
