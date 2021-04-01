@@ -1,17 +1,7 @@
-def numStd():
+def getInputNum(type_):
     while True:
         try:
-            i = int(input("Enter the number of students: "))
-            return i
-        except ValueError:
-            print("Invalid input. Try again")
-            pass
-
-
-def numCourse():
-    while True:
-        try:
-            i = int(input("Enter the number of courses: "))
+            i = int(input("Enter the number of " + type_ + ": "))
             return i
         except ValueError:
             print("Invalid input. Try again")
@@ -29,26 +19,23 @@ def createCourse(index):
 
 def createCourses():
     courses = []
-    for i in range(numCourse()):
+    for i in range(getInputNum("courses")):
         courses.append(createCourse(i))
     return courses
 
 
 def createStudent(index):
-    id_ = input("Enter id of Student " + str(index + 1) + " : ")
-    name = input("Enter the name of Student: ")
-    dob = input("Enter DoB: ")
     student = {
-        "id": id_,
-        "name": name,
-        "dob": dob
+        "id": input("Enter id of Student " + str(index + 1) + " : "),
+        "name": input("Enter the name of Student: "),
+        "dob": input("Enter DoB: ")
     }
     return student
 
 
 def createStudents():
     stdList = []
-    for index in range(numStd()):
+    for index in range(getInputNum("students")):
         stdList.append(createStudent(index))
     return stdList
 
