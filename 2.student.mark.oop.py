@@ -1,136 +1,151 @@
+class System:
+    def __init__(self):
+        self.__students = []
+        self.__courses = []
+
+    def setStudents(self):
+        self.__students = []
+        for i in range(self.__getInputNum__("students")):
+            print("Student " + str(i + 1) + ":")
+            self.__students.append(Student())
+
+    def setCourses(self):
+        self.__courses = []
+        for i in range(self.__getInputNum__("courses")):
+            print("Course " + str(i + 1) + ":")
+            self.__courses.append(Course())
+
+    def getStudents(self):
+        return self.__students
+
+    def getCourses(self):
+        return self.__courses
+
+    @staticmethod
+    def __getInputNum__(type_):
+        while True:
+            try:
+                i = int(input("Enter the number of " + type_ + ": "))
+                return i
+            except ValueError:
+                print("Invalid input. Try again")
+                pass
+
+    def __getInputCourse__(self):
+        while True:
+            courseName = input("Enter course name: ")
+            for course in self.__courses:
+                if courseName == course.getName():
+                    return course
+            print("Invalid course. Try again")
+
+    def __getActionId__(self):
+        print("==========")
+        print("Actions: ")
+        print(" (1) List Courses")
+        print(" (2) List Students")
+        print(" (3) Set Marks (given course)")
+        print(" (4) Get Marks (given course)")
+        print(" (5) Finish")
+        while True:
+            try:
+                i = self.__getInputNum__("Action")
+                if i in (1, 2, 3, 4, 5):
+                    return i
+            except ValueError:
+                pass
+            print("Invalid input. Try again")
+
+    def __action__(self):
+        while True:
+            actionId = self.__getActionId__()
+            if actionId == 1:
+                for course in self.__courses:
+                    print(course.getName())
+            elif actionId == 2:
+                for student in self.__students:
+                    print(student.getName())
+            elif actionId == 3:
+                course = self.__getInputCourse__()
+                course.setMarks(self.__students)
+            elif actionId == 4:
+                course = self.__getInputCourse__()
+                course.getInfo()
+            else:
+                print("Finish. Thank you !")
+                break
+
+    def run(self):
+        self.setStudents()
+        self.setCourses()
+        self.__action__()
+
+
 class Student:
     def __init__(self):
-        self.id = input("Enter id of Student: ")
-        self.name = input("Enter name of Student: ")
-        self.dob = input("Enter DoB of Student: ")
+        self.__id = input("Enter id of Student: ")
+        self.__name = input("Enter name of Student: ")
+        self.__dob = input("Enter DoB of Student: ")
 
     def setId(self, id_):
-        self.id = id_
+        self.__id = id_
 
     def setName(self, name):
-        self.name = name
+        self.__name = name
 
     def setDoB(self, dob):
-        self.dob = dob
+        self.__dob = dob
 
     def getId(self):
-        return self.id
+        return self.__id
 
     def getName(self):
-        return self.name
+        return self.__name
 
     def getDoB(self):
-        return self.dob
+        return self.__dob
 
-    def toString(self):
-        print("Student: " + self.name + ":")
-        print(" * Id: " + self.id)
-        print(" * Dob: " + self.dob)
+    def getInfo(self):
+        print("Student: " + self.__name + ":")
+        print(" * Id: " + self.__id)
+        print(" * Dob: " + self.__dob)
 
 
 class Course:
     def __init__(self):
-        self.name = input("Enter Course name: ")
-        self.id = input("Enter Course id: ")
-        self.marks = []
+        self.__name = input("Enter Course name: ")
+        self.__id = input("Enter Course id: ")
+        self.__marks = []
 
     def setName(self, name):
-        self.name = name
+        self.__name = name
 
     def setId(self, id_):
-        self.id = id_
+        self.__id = id_
 
     def setMarks(self, students):
+        self.__marks = []
         print("=========")
         for student in students:
             mark = int(input("Enter mark of " + student.getName() + ": "))
-            self.marks.append([student.getName(), mark])
+            self.__marks.append([student.getName(), mark])
 
     def getName(self):
-        return self.name
+        return self.__name
 
     def getId(self):
-        return self.id
+        return self.__id
 
     def getMarks(self):
-        return self.marks
+        return self.__marks
 
-    def toString(self):
-        print("Course: " + self.name + ":")
-        print(" * Id: " + self.id)
+    def getInfo(self):
+        print("Course: " + self.__name + ":")
+        print(" * Id: " + self.__id)
         print(" * Marks: ")
-        for i in range(len(self.marks)):
-            print("     +   " + self.marks[i][0] + ": " + str(self.marks[i][1]))
+        for i in range(len(self.__marks)):
+            print("     +   " + self.__marks[i][0] + ": " + str(self.__marks[i][1]))
 
 
-def getInputNum(type_):
-    while True:
-        try:
-            i = int(input("Enter the number of " + type_ + ": "))
-            return i
-        except ValueError:
-            print("Invalid input. Try again")
-            pass
-
-
-def getInputCourse(courses):
-    while True:
-        courseName = input("Enter course name: ")
-        for course in courses:
-            if courseName == course.getName():
-                return course
-        print("Invalid course. Try again")
-
-
-def getActionId():
-    print("==========")
-    print("Actions: ")
-    print(" (1) List Courses")
-    print(" (2) List Students")
-    print(" (3) Set Marks (given course)")
-    print(" (4) Get Marks (given course)")
-    print(" (5) Finish")
-    while True:
-        try:
-            i = int(input("Enter a number for Action: "))
-            if i in (1, 2, 3, 4, 5):
-                return i
-        except ValueError:
-            pass
-        print("Invalid input. Try again")
-
-
-def action(students, courses):
-    while True:
-        actionId = getActionId()
-        if actionId == 1:
-            for course in courses:
-                print(course.getName())
-        elif actionId == 2:
-            for student in students:
-                print(student.getName())
-        elif actionId == 3:
-            course = getInputCourse(courses)
-            course.setMarks(students)
-        elif actionId == 4:
-            course = getInputCourse(courses)
-            course.toString()
-        else:
-            print("Finish. Thank you !")
-            break
-
-
-def run():
-    students = []
-    courses = []
-    for i in range(getInputNum("students")):
-        print("Student " + str(i + 1) + ":")
-        students.append(Student())
-    for i in range(getInputNum("courses")):
-        print("Course " + str(i + 1) + ":")
-        courses.append(Course())
-
-    action(students, courses)
-
-
-run()
+System = System()
+System.run()
