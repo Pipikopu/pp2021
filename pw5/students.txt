@@ -1,0 +1,9 @@
+
+Student: anh:
+ * Id: 100
+ * Dob: 100
+ * Gpa: 30.0
+Student: bao:
+ * Id: 101
+ * Dob: 101
+ * Gpa: 40.0
